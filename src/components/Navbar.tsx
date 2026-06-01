@@ -99,14 +99,6 @@ export default function Navbar() {
           ))}
         </nav>
 
-        {/* CTA desktop */}
-        <a
-          href="#contacto"
-          className="hidden md:inline-flex items-center gap-2 px-5 py-2 rounded-lg bg-[#00d4ff] text-[#080c14] text-sm font-semibold hover:bg-[#00bde8] transition-colors glow-primary"
-        >
-          Cotizar ahora
-        </a>
-
         {/* Mobile toggle */}
         <button
           className="md:hidden text-slate-300 hover:text-white"
@@ -133,13 +125,6 @@ export default function Navbar() {
               {l.label}
             </a>
           ))}
-          <a
-            href="#contacto"
-            className="mt-2 px-5 py-2 rounded-lg bg-[#00d4ff] text-[#080c14] text-sm font-semibold text-center"
-            onClick={() => setMenuOpen(false)}
-          >
-            Cotizar ahora
-          </a>
         </div>
       )}
     </header>
