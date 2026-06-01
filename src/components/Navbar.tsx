@@ -5,10 +5,12 @@ import { COMPANY } from '../config'
 const links = [
   { label: 'Inicio', href: '#inicio' },
   { label: 'Servicios', href: '#servicios' },
+  { label: 'Proceso', href: '#proceso' },
   { label: 'Nosotros', href: '#nosotros' },
-  { label: 'Certificaciones', href: '#certificaciones' },
   { label: 'Testimonios', href: '#testimonios' },
   { label: 'Contacto', href: '#contacto' },
+  { label: 'FAQ', href: '#faq' },
+  { label: 'Certificaciones', href: '#certificaciones' },
 ]
 
 export default function Navbar() {
@@ -77,7 +79,7 @@ export default function Navbar() {
         </a>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden md:flex items-center gap-5 lg:gap-7">
           {links.map((l) => (
             <a
               key={l.href}
