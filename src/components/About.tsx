@@ -1,6 +1,7 @@
 import { CheckCircle, Users, Award, Zap, ArrowRight } from 'lucide-react'
 import { COMPANY } from '../config'
 import Reveal from './Reveal'
+import CountUp from './CountUp'
 
 const values = [
   {
@@ -70,7 +71,9 @@ export default function About() {
             <div className="grid grid-cols-3 gap-6 mb-9 py-6 border-y border-white/10">
               {stats.map(({ value, label }) => (
                 <div key={label}>
-                  <div className="text-3xl font-black text-[#00d4ff] mb-1">{value}</div>
+                  <div className="text-3xl font-black text-[#00d4ff] mb-1">
+                    <CountUp value={value} />
+                  </div>
                   <div className="text-slate-400 text-xs leading-tight">{label}</div>
                 </div>
               ))}

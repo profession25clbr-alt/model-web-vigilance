@@ -7,18 +7,54 @@ const links = [
   { label: 'Servicios', href: '#servicios' },
   { label: 'Nosotros', href: '#nosotros' },
   { label: 'Certificaciones', href: '#certificaciones' },
+  { label: 'Testimonios', href: '#testimonios' },
   { label: 'Contacto', href: '#contacto' },
 ]
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [active, setActive] = useState('#inicio')
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  // Scroll-spy: resalta el enlace de la sección visible.
+  useEffect(() => {
+    const sections = links
+      .map((l) => document.querySelector(l.href))
+      .filter((el): el is Element => el !== null)
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
+        if (visible) setActive(`#${visible.target.id}`)
+      },
+      { rootMargin: '-45% 0px -45% 0px', threshold: 0 },
+    )
+
+    sections.forEach((el) => obs.observe(el))
+    return () => obs.disconnect()
+  }, [])
+
+  // Cierra el menú móvil con la tecla Escape y bloquea el scroll del fondo.
+  useEffect(() => {
+    if (!menuOpen) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMenuOpen(false)
+    }
+    document.body.style.overflow = 'hidden'
+    window.addEventListener('keydown', onKey)
+    return () => {
+      document.body.style.overflow = ''
+      window.removeEventListener('keydown', onKey)
+    }
+  }, [menuOpen])
 
   return (
     <header
@@ -46,9 +82,19 @@ export default function Navbar() {
             <a
               key={l.href}
               href={l.href}
-              className="text-slate-400 hover:text-[#00d4ff] text-sm font-medium transition-colors duration-200"
+              aria-current={active === l.href ? 'true' : undefined}
+              className={`relative text-sm font-medium transition-colors duration-200 ${
+                active === l.href
+                  ? 'text-[#00d4ff]'
+                  : 'text-slate-400 hover:text-[#00d4ff]'
+              }`}
             >
               {l.label}
+              <span
+                className={`absolute -bottom-1.5 left-0 h-0.5 bg-[#00d4ff] transition-all duration-300 ${
+                  active === l.href ? 'w-full' : 'w-0'
+                }`}
+              />
             </a>
           ))}
         </nav>
@@ -78,7 +124,10 @@ export default function Navbar() {
             <a
               key={l.href}
               href={l.href}
-              className="text-slate-300 hover:text-[#00d4ff] text-sm font-medium py-1 transition-colors"
+              aria-current={active === l.href ? 'true' : undefined}
+              className={`text-sm font-medium py-1 transition-colors ${
+                active === l.href ? 'text-[#00d4ff]' : 'text-slate-300 hover:text-[#00d4ff]'
+              }`}
               onClick={() => setMenuOpen(false)}
             >
               {l.label}

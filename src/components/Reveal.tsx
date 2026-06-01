@@ -14,6 +14,13 @@ export default function Reveal({ children, delay = 0, className = '' }: RevealPr
   useEffect(() => {
     const el = ref.current
     if (!el) return
+
+    // Si el usuario prefiere menos movimiento, mostrar el contenido de inmediato.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setVisible(true)
+      return
+    }
+
     const obs = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {

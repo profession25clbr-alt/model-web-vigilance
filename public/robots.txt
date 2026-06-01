@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://prototipo-vigilancia-web.questweb.cl/sitemap.xml

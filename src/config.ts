@@ -8,4 +8,7 @@ export const COMPANY = {
   email:     'contacto@suempresa.com',
   phone:     '+XX (XXX) XXX-XXXX',
   address:   'Ciudad, País',
+  // Número de WhatsApp en formato internacional, solo dígitos (sin +, espacios ni guiones).
+  // Ejemplo Chile: '56912345678'. Placeholder para el prototipo:
+  whatsapp:  '56900000000',
 }

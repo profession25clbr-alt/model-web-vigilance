@@ -13,6 +13,9 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    /* Compensa el navbar fijo (h-16 = 64px) al saltar a un ancla,
+       para que el título de la sección no quede oculto debajo. */
+    scroll-padding-top: 5rem;
   }
 
   body {
@@ -33,6 +36,16 @@
 
   p {
     margin: 0;
+  }
+
+  /* Foco visible y consistente para navegación por teclado */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: 4px;
   }
 }
 
@@ -125,4 +138,25 @@
 
 .marquee-track:hover {
   animation-play-state: paused;
+}
+
+/* ── Accesibilidad: respetar preferencia de menos movimiento ── */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .marquee-track {
+    animation: none;
+    transform: none;
+  }
 }

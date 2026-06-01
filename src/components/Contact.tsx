@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react'
-import { Send, MapPin, Phone, Mail, CheckCircle } from 'lucide-react'
+import { Send, MapPin, Phone, Mail } from 'lucide-react'
 import { COMPANY } from '../config'
 import Reveal from './Reveal'
 
@@ -9,7 +9,7 @@ const info = [
   { icon: MapPin, label: 'Dirección', value: COMPANY.address },
 ]
 
-type FormState = 'idle' | 'loading' | 'success' | 'error'
+type FormState = 'idle' | 'demo'
 
 export default function Contact() {
   const [state, setState] = useState<FormState>('idle')
@@ -18,25 +18,11 @@ export default function Contact() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm({ ...form, [e.target.name]: e.target.value })
 
-  const handleSubmit = async (e: FormEvent) => {
+  // Prototipo: el formulario no envía datos a ningún backend.
+  // Se muestra un aviso de entorno de prueba en lugar de hacer la petición.
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-    setState('loading')
-
-    try {
-      const res = await fetch('/api/contact.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      })
-      if (res.ok) {
-        setState('success')
-        setForm({ name: '', email: '', phone: '', message: '' })
-      } else {
-        setState('error')
-      }
-    } catch {
-      setState('error')
-    }
+    setState('demo')
   }
 
   return (
@@ -92,23 +78,6 @@ export default function Contact() {
 
           {/* Form column */}
           <div className="lg:col-span-3 card-border rounded-2xl p-8 bg-[#141d2e]">
-            {state === 'success' ? (
-              <div className="flex flex-col items-center justify-center h-full gap-4 py-12">
-                <div className="w-16 h-16 rounded-full bg-[#00d4ff]/10 border border-[#00d4ff]/30 flex items-center justify-center">
-                  <CheckCircle className="w-8 h-8 text-[#00d4ff]" />
-                </div>
-                <h3 className="text-white font-bold text-xl">¡Mensaje enviado!</h3>
-                <p className="text-slate-400 text-center">
-                  Nos comunicaremos contigo en menos de 24 horas.
-                </p>
-                <button
-                  onClick={() => setState('idle')}
-                  className="mt-4 px-6 py-2 rounded-lg border border-[#00d4ff]/30 text-[#00d4ff] text-sm hover:bg-[#00d4ff]/10 transition-colors"
-                >
-                  Enviar otro mensaje
-                </button>
-              </div>
-            ) : (
               <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div>
@@ -162,31 +131,24 @@ export default function Contact() {
                   />
                 </div>
 
-                {state === 'error' && (
-                  <p className="text-red-400 text-sm text-center">
-                    Hubo un error al enviar. Por favor intenta nuevamente.
+                {state === 'demo' && (
+                  <p
+                    role="status"
+                    aria-live="polite"
+                    className="text-red-400 text-sm text-center font-medium border border-red-400/30 bg-red-400/5 rounded-lg py-2.5 px-3"
+                  >
+                    ⚠ Entorno de prueba — este formulario es demostrativo y no envía información.
                   </p>
                 )}
 
                 <button
                   type="submit"
-                  disabled={state === 'loading'}
-                  className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl bg-[#00d4ff] text-[#080c14] font-bold text-sm hover:bg-[#00bde8] transition-colors glow-primary disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl bg-[#00d4ff] text-[#080c14] font-bold text-sm hover:bg-[#00bde8] transition-colors glow-primary"
                 >
-                  {state === 'loading' ? (
-                    <>
-                      <div className="w-4 h-4 border-2 border-[#080c14]/30 border-t-[#080c14] rounded-full animate-spin" />
-                      Enviando...
-                    </>
-                  ) : (
-                    <>
-                      <Send className="w-4 h-4" />
-                      Enviar mensaje
-                    </>
-                  )}
+                  <Send className="w-4 h-4" />
+                  Enviar mensaje
                 </button>
               </form>
-            )}
           </div>
         </div>
       </div>

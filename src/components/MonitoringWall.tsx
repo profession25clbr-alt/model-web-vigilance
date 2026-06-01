@@ -122,6 +122,7 @@ function CameraFeed({ cam, idx, currentSet, alertCamIdx, time }: FeedProps) {
         <img
           src={imgA}
           alt=""
+          decoding="async"
           onError={() => setErrA(true)}
           className="absolute inset-0 w-full h-full object-cover"
           style={{
@@ -136,6 +137,7 @@ function CameraFeed({ cam, idx, currentSet, alertCamIdx, time }: FeedProps) {
         <img
           src={imgB}
           alt=""
+          decoding="async"
           onError={() => setErrB(true)}
           className="absolute inset-0 w-full h-full object-cover"
           style={{
