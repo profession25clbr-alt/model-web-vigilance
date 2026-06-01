@@ -28,10 +28,10 @@ export default function App() {
         <Services />
         <Process />
         <About />
-        <Certifications />
         <Testimonials />
-        <FAQ />
         <Contact />
+        <FAQ />
+        <Certifications />
       </main>
       <Footer />
       <WhatsAppButton />
