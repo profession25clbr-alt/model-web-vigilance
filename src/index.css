@@ -1,0 +1,128 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #00d4ff;
+  --color-primary-dark: #0099bb;
+  --color-dark: #080c14;
+  --color-dark-2: #0d1421;
+  --color-dark-3: #111827;
+  --color-dark-card: #141d2e;
+  --font-sans: 'Inter', system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: #080c14;
+    color: #e2e8f0;
+    font-family: 'Inter', system-ui, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+@layer utilities {
+  .glow-primary {
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+  }
+
+  .glow-text {
+    text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+  }
+
+  .grid-bg {
+    background-image:
+      linear-gradient(rgba(0, 212, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 212, 255, 0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .card-border {
+    border: 1px solid rgba(0, 212, 255, 0.15);
+  }
+
+  .card-hover {
+    transition: all 0.3s ease;
+  }
+
+  .card-hover:hover {
+    border-color: rgba(0, 212, 255, 0.5) !important;
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.12);
+    transform: translateY(-4px);
+  }
+
+  .nav-blur {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  /* ── Animaciones de entrada ── */
+  .animate-fade-up {
+    animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 1s ease-out both;
+  }
+
+  /* Texto con sombra para legibilidad sobre el muro de cámaras */
+  .text-shadow-strong {
+    text-shadow: 0 2px 30px rgba(0, 0, 0, 0.9), 0 1px 6px rgba(0, 0, 0, 0.8);
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes equalizer {
+  0%, 100% { transform: scaleY(0.3); }
+  50% { transform: scaleY(1); }
+}
+
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
